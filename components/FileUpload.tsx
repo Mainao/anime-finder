@@ -16,27 +16,6 @@ export default function FileUpload() {
     const [videoSrc, setVideoSrc] = useState<string>("");
     const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
 
-    const handleFiles = async (fileList: FileList | null) => {
-        if (!fileList) return;
-        console.log("fileList", fileList);
-        console.log("fileList Array", Array.from(fileList));
-        const fileArray = Array.from(fileList);
-        setPreviewImageUrl(URL.createObjectURL(fileArray[0]));
-        setLoading(true);
-        try {
-            const result = await searchAnimeByImage(fileList[0]);
-            setMatches(result);
-            if (result.length > 0) {
-                setAnimeDetail(result[0].anilist);
-                setVideoSrc(result[0].video);
-            }
-        } catch (err) {
-            console.error("Error fetching anime data", err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
         e.preventDefault();
         setHighlight(true);
@@ -57,6 +36,28 @@ export default function FileUpload() {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFileDropped(true);
         handleFiles(e.target.files);
+    };
+
+    const handleFiles = async (fileList: FileList | null) => {
+        if (!fileList) return;
+        const fileArray = Array.from(fileList);
+        if (previewImageUrl) {
+            URL.revokeObjectURL(previewImageUrl);
+        }
+        setPreviewImageUrl(URL.createObjectURL(fileArray[0]));
+        setLoading(true);
+        try {
+            const result = await searchAnimeByImage(fileList[0]);
+            setMatches(result);
+            if (result.length > 0) {
+                setAnimeDetail(result[0].anilist);
+                setVideoSrc(result[0].video);
+            }
+        } catch (err) {
+            console.error("Error fetching anime data", err);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
