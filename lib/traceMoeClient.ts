@@ -12,5 +12,5 @@ export async function searchAnimeByImage(file: File) {
     }
 
     const data = await res.json();
-    return data.result.slice(0, 5);
+    return data.result;
 }
