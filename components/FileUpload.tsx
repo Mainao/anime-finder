@@ -28,23 +28,25 @@ export default function FileUpload() {
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files) return;
         handleFiles(e.target.files);
     };
 
-    const handleFiles = async (fileList: FileList | null) => {
-        if (!fileList) return;
+    const handleFiles = async (fileList: FileList | File[]) => {
+        if (!fileList || fileList.length === 0) return;
         const fileArray = Array.from(fileList);
-        if (previewImageUrl) {
-            URL.revokeObjectURL(previewImageUrl);
-        }
+
+        if (previewImageUrl) URL.revokeObjectURL(previewImageUrl);
+
         setPreviewImageUrl(URL.createObjectURL(fileArray[0]));
         setMatches([]);
         setLoading(true);
+
         try {
-            const result = await searchAnimeByImage(fileList[0]);
+            const result = await searchAnimeByImage(fileArray[0]);
             setMatches(result);
         } catch (err) {
-            console.error("Error fetching anime data", err);
+            console.error("Anime search failed:", err);
         } finally {
             setLoading(false);
         }
@@ -66,7 +68,7 @@ export default function FileUpload() {
                     >
                         <span className="text-lg">🔍</span>
                         <span className="text-xs md:text-sm">
-                            Upload an image or enter an image URL
+                            Upload an image
                         </span>
                         <input
                             id="upload"
@@ -77,6 +79,7 @@ export default function FileUpload() {
                         />
                     </label>
                 </div>
+                {/* <CameraCapture onCapture={(file) => handleFiles([file])} /> */}
             </section>
 
             {loading && (
