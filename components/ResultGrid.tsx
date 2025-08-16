@@ -9,7 +9,7 @@ export default function ResultGrid({ matches }: ResultGridProps) {
     return (
         <>
             {matches.length > 0 && (
-                <section className="w-full flex-1 px-4 md:px-10 mt-10">
+                <section className="mt-10 px-8">
                     <h2 className="text-lg md:text-xl font-semibold mb-4">
                         Search Results
                     </h2>

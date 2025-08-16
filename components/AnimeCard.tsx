@@ -1,6 +1,5 @@
 import { TraceMoeResult } from "@/types/AnimeMatch";
 import Image from "next/image";
-import HoverCard from "./HoverCard";
 
 type Props = {
     match: TraceMoeResult;
@@ -9,7 +8,6 @@ type Props = {
 
 export default function MatchResult({ match, index }: Props) {
     const matchPercent = Math.round(match.similarity * 100);
-    const isLastColumn = (index + 1) % 4 === 0;
     const getMatchColor = (percent: number) => {
         if (percent >= 80) return "text-green-400";
         if (percent >= 70) return "text-yellow-400";
@@ -32,9 +30,6 @@ export default function MatchResult({ match, index }: Props) {
             <div className={`text-xs ${getMatchColor(matchPercent)}`}>
                 <p>{matchPercent}% Similarity</p>
             </div>
-
-            {/* Hover Card */}
-            <HoverCard match={match} isLeft={isLastColumn} />
         </div>
     );
 }

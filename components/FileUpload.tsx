@@ -2,14 +2,17 @@
 
 import { searchAnimeByImage } from "@/lib/traceMoeClient";
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { TraceMoeResult } from "@/types/AnimeMatch";
 import ResultGrid from "./ResultGrid";
 
 export default function FileUpload() {
-    const [loading, setLoading] = useState(false);
     const [highlight, setHighlight] = useState(false);
-    const [matches, setMatches] = useState<TraceMoeResult[]>([]);
     const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
+
+    const searchMutation = useMutation<TraceMoeResult[], Error, File>({
+        mutationFn: (file: File) => searchAnimeByImage(file),
+    });
 
     const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
         e.preventDefault();
@@ -39,26 +42,17 @@ export default function FileUpload() {
         if (previewImageUrl) URL.revokeObjectURL(previewImageUrl);
 
         setPreviewImageUrl(URL.createObjectURL(fileArray[0]));
-        setMatches([]);
-        setLoading(true);
 
-        try {
-            const result = await searchAnimeByImage(fileArray[0]);
-            setMatches(result);
-        } catch (err) {
-            console.error("Anime search failed:", err);
-        } finally {
-            setLoading(false);
-        }
+        searchMutation.mutate(fileArray[0]);
     };
 
     return (
         <>
-            <section className="flex flex-col items-center justify-start mt-10 px-4 w-full">
-                <h1 className="text-lg md:text-3xl font-semibold text-center mb-6">
+            <section className="flex flex-col items-center justify-start mt-6 md:mt-10">
+                <h1 className="text-sm md:text-3xl font-semibold text-center mb-6">
                     Find the anime scene by image
                 </h1>
-                <div className="w-full max-w-6xl">
+                <div className="w-full max-w-7xl px-8">
                     <label
                         htmlFor="upload"
                         className="flex items-center gap-3 px-4 py-3 bg-[#2d333b] rounded-sm cursor-pointer text-white/60 hover:bg-white/10 transition"
@@ -79,10 +73,9 @@ export default function FileUpload() {
                         />
                     </label>
                 </div>
-                {/* <CameraCapture onCapture={(file) => handleFiles([file])} /> */}
             </section>
 
-            {loading && (
+            {searchMutation.isPending && (
                 <div className="w-full flex justify-center mt-6">
                     <p className="text-white text-lg animate-pulse">
                         Searching for matches
@@ -91,7 +84,9 @@ export default function FileUpload() {
                 </div>
             )}
 
-            <ResultGrid matches={matches} />
+            {searchMutation.isSuccess && (
+                <ResultGrid matches={searchMutation.data} />
+            )}
         </>
     );
 }
