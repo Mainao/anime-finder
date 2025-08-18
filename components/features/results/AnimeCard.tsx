@@ -15,7 +15,6 @@ export default function MatchResult({ match, index }: Props) {
     };
     return (
         <div className="relative group flex flex-col cursor-pointer">
-            {/* Image */}
             <Image
                 src={match.image}
                 alt={`Thumbnail for ${match.filename}`}

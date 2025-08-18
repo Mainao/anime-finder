@@ -4,9 +4,11 @@ import { searchAnimeByImage } from "@/lib/traceMoeClient";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { TraceMoeResult } from "@/types/AnimeMatch";
-import ResultGrid from "./ResultGrid";
+import UploadBox from "../UploadBox";
+import LoadingSpinner from "@/components/ui/Spinner";
+import AnimeResultGrid from "../../results/AnimeResultGrid";
 
-export default function FileUpload() {
+export default function UploadAndSearch() {
     const [highlight, setHighlight] = useState(false);
     const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
 
@@ -50,42 +52,24 @@ export default function FileUpload() {
         <>
             <section className="flex flex-col items-center justify-start mt-6 md:mt-10">
                 <h1 className="text-sm md:text-3xl font-semibold text-center mb-6">
-                    Find the anime scene by image
+                    Find the anime scene by image...
                 </h1>
                 <div className="w-full max-w-7xl px-8">
-                    <label
-                        htmlFor="upload"
-                        className="flex items-center gap-3 px-4 py-3 bg-[#2d333b] rounded-sm cursor-pointer text-white/60 hover:bg-white/10 transition"
+                    <UploadBox
                         onDragOver={handleDragOver}
                         onDragLeave={handleDragLeave}
                         onDrop={handleDrop}
-                    >
-                        <span className="text-lg">🔍</span>
-                        <span className="text-xs md:text-sm">
-                            Upload an image
-                        </span>
-                        <input
-                            id="upload"
-                            type="file"
-                            accept="image/*"
-                            className="hidden"
-                            onChange={handleChange}
-                        />
-                    </label>
+                        onChange={handleChange}
+                    />
                 </div>
             </section>
 
             {searchMutation.isPending && (
-                <div className="w-full flex justify-center mt-6">
-                    <p className="text-white text-lg animate-pulse">
-                        Searching for matches
-                        <span className="animate-bounce">...</span>
-                    </p>
-                </div>
+                <LoadingSpinner className="w-full mt-6" size={100} />
             )}
 
             {searchMutation.isSuccess && (
-                <ResultGrid matches={searchMutation.data} />
+                <AnimeResultGrid matches={searchMutation.data} />
             )}
         </>
     );

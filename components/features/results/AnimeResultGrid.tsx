@@ -5,7 +5,7 @@ type ResultGridProps = {
     matches: TraceMoeResult[];
 };
 
-export default function ResultGrid({ matches }: ResultGridProps) {
+export default function AnimeResultGrid({ matches }: ResultGridProps) {
     return (
         <>
             {matches.length > 0 && (
