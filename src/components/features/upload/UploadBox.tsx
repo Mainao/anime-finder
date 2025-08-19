@@ -14,13 +14,14 @@ export default function UploadBox({
     return (
         <label
             htmlFor="upload"
-            className="flex items-center gap-3 px-4 py-3 bg-[#2d333b] rounded-sm cursor-pointer text-white/60 hover:bg-white/10 transition"
+            className="flex items-center gap-3 px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-sm cursor-pointer text-white/60"
             onDragOver={onDragOver}
             onDragLeave={onDragLeave}
             onDrop={onDrop}
         >
-            <span className="text-lg">🔍</span>
-            <span className="text-xs md:text-sm">Upload an image</span>
+            <span className="text-xs md:text-sm">
+                Search an anime by uploading an image
+            </span>
             <input
                 id="upload"
                 type="file"

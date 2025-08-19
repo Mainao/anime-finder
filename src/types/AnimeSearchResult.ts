@@ -1,4 +1,6 @@
-export interface TraceMoeResult {
+export type AnimeSearchResult = AnimeResult[];
+
+export interface AnimeResult {
     anilist: Anilist;
     filename: string;
     episode: number;

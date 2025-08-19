@@ -1,8 +1,11 @@
+import { TRACE_MOE_API_BASE_URL } from "@/lib/apiConfig";
+import { AnimeSearchResult } from "@/types/AnimeSearchResult";
+
 export async function searchAnimeByImage(file: File) {
     const formData = new FormData();
     formData.append("image", file);
 
-    const res = await fetch("https://api.trace.moe/search?anilistInfo", {
+    const res = await fetch(`${TRACE_MOE_API_BASE_URL}/search?anilistInfo`, {
         method: "POST",
         body: formData,
     });
@@ -12,5 +15,5 @@ export async function searchAnimeByImage(file: File) {
     }
 
     const data = await res.json();
-    return data.result;
+    return data.result as AnimeSearchResult;
 }
