@@ -58,7 +58,7 @@ export default function UploadAndSearch() {
             </section>
 
             {animeSearch.isPending && (
-                <LoadingSpinner className="w-full mt-6" size={100} />
+                <LoadingSpinner className="w-full mt-6" size={400} />
             )}
 
             {animeSearch.isSuccess && (
