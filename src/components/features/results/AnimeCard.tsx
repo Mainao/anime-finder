@@ -3,10 +3,9 @@ import Image from "next/image";
 
 type Props = {
     match: AnimeResult;
-    index: number;
 };
 
-export default function MatchResult({ match, index }: Props) {
+export default function AnimeCard({ match }: Props) {
     const matchPercent = Math.round(match.similarity * 100);
     const getMatchColor = (percent: number) => {
         if (percent >= 80) return "bg-green-700";
@@ -43,8 +42,8 @@ export default function MatchResult({ match, index }: Props) {
             </div>
             <div className="flex flex-wrap text-xs mb-4 p-2">
                 {!!match.anilist.genres &&
-                    match.anilist.genres.map((genre) => (
-                        <span className="bg-zinc-900 mr-2 p-1 rounded">
+                    match.anilist.genres.map((genre, index) => (
+                        <span key={index} className="bg-zinc-900 mr-2 p-1 rounded">
                             {genre}
                         </span>
                     ))}

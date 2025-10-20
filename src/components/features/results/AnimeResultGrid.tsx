@@ -14,7 +14,6 @@ export default function AnimeResultGrid({ matches }: ResultGridProps) {
                     {matches.map((match, index) => (
                         <AnimeCard
                             key={`${match.anilist.id}-${index}`}
-                            index={index}
                             match={match}
                         />
                     ))}
