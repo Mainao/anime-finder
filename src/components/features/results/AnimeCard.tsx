@@ -41,7 +41,7 @@ export default function MatchResult({ match, index }: Props) {
                     min · {match.anilist.format} · {match.anilist.type}
                 </span>
             </div>
-            <div className="flex text-xs mb-4 p-2">
+            <div className="flex flex-wrap text-xs mb-4 p-2">
                 {!!match.anilist.genres &&
                     match.anilist.genres.map((genre) => (
                         <span className="bg-zinc-900 mr-2 p-1 rounded">
