@@ -5,10 +5,13 @@ export async function searchAnimeByImage(file: File) {
     const formData = new FormData();
     formData.append("image", file);
 
-    const res = await fetch(`${TRACE_MOE_API_BASE_URL}/search?anilistInfo`, {
-        method: "POST",
-        body: formData,
-    });
+    const res = await fetch(
+        `${TRACE_MOE_API_BASE_URL}/search?anilistInfo&cutBorders`,
+        {
+            method: "POST",
+            body: formData,
+        }
+    );
 
     if (!res.ok) {
         throw new Error("Anime search failed");
