@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-export default function UploadPreview({previewImageUrl}) {
+export default function UploadPreview({previewImageUrl}: {previewImageUrl: string | null}) {
     return (
         <>
             <div className="md:w-1/3 space-y-4 mt-6">
