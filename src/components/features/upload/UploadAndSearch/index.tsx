@@ -6,6 +6,7 @@ import UploadPreview from "../UploadPreview";
 import LoadingSpinner from "@/components/ui/Spinner";
 import AnimeResultGrid from "@/components/features/results/AnimeResultGrid";
 import { useAnimeSearch } from "@/hooks/useAnimeSearch";
+import AnimeTopMatch from "../../results/AnimeTopMatch";
 
 export default function UploadAndSearch() {
     const [highlight, setHighlight] = useState(false);
@@ -63,7 +64,10 @@ export default function UploadAndSearch() {
             )}
 
             {animeSearch.isSuccess && (
-                <UploadPreview previewImageUrl={previewImageUrl} />
+                <div className="flex flex-col md:flex-row gap-4 mt-6">
+                    <UploadPreview previewImageUrl={previewImageUrl} />
+                    <AnimeTopMatch topMatch={animeSearch?.data[0]} />
+                </div>
             )}
 
             {animeSearch.isSuccess && (
