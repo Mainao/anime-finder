@@ -1,7 +1,6 @@
-# Anime-Finder
+Anime-Finder is an anime scene search app that lets you find which anime a screenshot belongs to. Upload an image to get the matching anime scene.
 
-Anime-Finder is an anime scene search app built with Next.js that helps you identify which anime a screenshot comes from.
-
-## Features
-
-- Search for anime by keywords by uploading image.  
+**Built With**
+- Next.js 15+
+- TypeScript
+- Tailwind CSS
